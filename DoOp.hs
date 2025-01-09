@@ -63,24 +63,24 @@ printAndGetLength a = do _ <- putStr (a ++ "\n")
 
 topAndBottom :: Int -> IO()
 topAndBottom 0 = do 
-                    putStr "+\n"
+                    _ <- putStr "+\n"
                     return ()
 topAndBottom i = do 
-                    putChar '-'
+                    _ <- putChar '-'
                     topAndBottom (i-1)
 
 middle :: Int -> IO()
 middle 0 = do
-                putStr "|\n"
+                _ <- putStr "|\n"
                 return ()
 middle i = do
-                putChar ' '
+                _ <- putChar ' '
                 middle (i-1)
            
 mainMiddle :: Int -> Int -> IO()
 mainMiddle _ 0 = do return ()
 mainMiddle a i = do
-                    putChar '|'
+                    _ <- putChar '|'
                     middle a
                     putChar '\n'
                     mainMiddle a (i-1)
@@ -89,7 +89,7 @@ printBox :: Int -> IO ()
 printBox i
     | i < 1 = do return ()
 printBox i = do
-                putChar '+'
+                _ <- putChar '+'
                 topAndBottom ((i*2)-2)
                 mainMiddle ((i*2)-2) (i - 2)
                 putChar '+'
