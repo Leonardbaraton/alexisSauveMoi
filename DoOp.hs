@@ -78,8 +78,7 @@ middle i = do
                 middle (i-1)
            
 mainMiddle :: Int -> Int -> IO()
-mainMiddle _ 0 = do _ <- return ()
-                    return ()
+mainMiddle _ 0 = return () >> return ()
 mainMiddle a i = do
                     _ <- putChar '|'
                     middle a
