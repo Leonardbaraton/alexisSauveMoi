@@ -58,7 +58,7 @@ getLineLength = do x <- getLine
                    return (length x)
                    
 printAndGetLength :: String -> IO Int
-printAndGetLength a = do putStr (a ++ "\n")
+printAndGetLength a = do _ <- putStr (a ++ "\n")
                          return (length a)
 
 topAndBottom :: Int -> IO()
