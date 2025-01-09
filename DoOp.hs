@@ -87,7 +87,7 @@ mainMiddle a i = do
                
 printBox :: Int -> IO ()
 printBox i
-    | i < 1 = do return () >> return ()
+    | i < 1 = return ()
 printBox i = do
                 _ <- putChar '+'
                 topAndBottom ((i*2)-2)
