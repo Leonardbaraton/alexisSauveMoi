@@ -87,7 +87,7 @@ mainMiddle a i = do
                
 printBox :: Int -> IO ()
 printBox i
-    | i < 1 = do return ()
+    | i < 1 = do return () >> return ()
 printBox i = do
                 _ <- putChar '+'
                 topAndBottom ((i*2)-2)
@@ -97,8 +97,7 @@ printBox i = do
 
 concatLines :: Int -> IO String
 concatLines i
-    | i<=0 = do _ <- return ()
-                return []
+    | i<=0 = do return () >> return []
     | i==1 = do newStr <- getLine
                 return(newStr)
 concatLines i = do newStr <- getLine
