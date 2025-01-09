@@ -78,7 +78,8 @@ middle i = do
                 middle (i-1)
            
 mainMiddle :: Int -> Int -> IO()
-mainMiddle _ 0 = do return ()
+mainMiddle _ 0 = do _ <- return ()
+                    return ()
 mainMiddle a i = do
                     _ <- putChar '|'
                     middle a
@@ -97,7 +98,8 @@ printBox i = do
 
 concatLines :: Int -> IO String
 concatLines i
-    | i<=0 = do return []
+    | i<=0 = do _ <- return ()
+                return []
     | i==1 = do newStr <- getLine
                 return(newStr)
 concatLines i = do newStr <- getLine
