@@ -20,32 +20,34 @@ readInt a
     | otherwise = Nothing
                 
 myAdd :: Maybe Int -> Maybe Int -> IO Int
-myAdd (Just a) (Just b) = do 
+myAdd (Just a) (Just b) = 
   let result = a + b
-  print result
-  return 0
+  in print result >> return 0
 myAdd _ _ = return 0
 
 mySub :: Maybe Int -> Maybe Int -> IO Int
-mySub (Just a) (Just b) = do 
+mySub (Just a) (Just b) = 
   let result = a - b
-  print result
-  return 0
+  in print result >> return 0
 mySub _ _ = return 0
 
 myTimes :: Maybe Int -> Maybe Int -> IO Int
-myTimes (Just a) (Just b) = do 
+myTimes (Just a) (Just b) = 
   let result = a * b
-  print result
-  return 0
+  in print result >> return 0
 myTimes _ _ = return 0
 
 myDiv :: Maybe Int -> Maybe Int -> IO Int
-myDiv (Just a) (Just b) = do 
+myDiv (Just a) (Just b) = 
   let result = div a b
-  print result
-  return 0
+  in print result >> return 0
 myDiv _ _ = return 0
+
+myPercent :: Maybe Int -> Maybe Int -> IO Int
+myPercent (Just a) (Just b) = 
+  let result = mod a b
+  in print result >> return 0
+myPercent _ _ = return 0
 
 checkArgs :: String -> String -> String -> IO Int
 checkArgs a b c = case (b) of
@@ -53,10 +55,13 @@ checkArgs a b c = case (b) of
                       "-" -> mySub (readInt a) (readInt c)
                       "*" -> myTimes (readInt a) (readInt c)
                       "/" -> myDiv (readInt a) (readInt c)
+                      "%" -> myPercent (readInt a) (readInt c)
                       _ -> return 0
 
 main :: IO Int
 main = do 
     args <- getArgs
-    _ <- checkArgs (args!!0) (args!!1) (args!!2)
+    _ <- if (length args == 3)
+        then checkArgs (args!!0) (args!!1) (args!!2)
+        else return 84
     return 0

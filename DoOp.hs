@@ -82,10 +82,11 @@ mainMiddle _ 0 = return () >> return ()
 mainMiddle a i = do
                     _ <- putChar '|'
                     middle a
-                    putChar '\n'
                     mainMiddle a (i-1)
                
 printBox :: Int -> IO ()
+printBox 1 = do _ <- putStr "++\n"
+                return ()
 printBox i
     | i < 1 = return ()
 printBox i = do
@@ -106,8 +107,7 @@ concatLines i = do newStr <- getLine
 
 getInt :: IO (Maybe Int)
 getInt = do charInt <- getLine
-            if (null charInt)
-                then return Nothing
-                else if (isNumber charInt) == True
-                    then return (Just (read charInt))
-                    else return Nothing
+            return $ if not (null charInt)
+                && all (\c -> c >= '0' && c <= '9') charInt
+                        then Just (read charInt)
+                        else Nothing
