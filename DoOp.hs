@@ -97,16 +97,17 @@ printBox i = do
 
 concatLines :: Int -> IO String
 concatLines i
-    | i<=0 = return []
-concatLines i
-    | i==1 = do newStr <- getLine
-                return(newStr)
+    | i <=0 = return []
+concatLines 1 = do newStr <- getLine
+                   return(newStr)
 concatLines i = do newStr <- getLine
                    finalStr <- (concatLines (i - 1))
                    return(newStr ++ finalStr)
-                   
+
 getInt :: IO (Maybe Int)
 getInt = do charInt <- getLine
-            if (isNumber charInt) == True
-                then return (Just (read charInt))
-                else return Nothing
+            if (null charInt)
+                then return Nothing
+                else if (isNumber charInt) == True
+                    then return (Just (read charInt))
+                    else return Nothing
