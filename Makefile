@@ -1,24 +1,16 @@
-##
-## EPITECH PROJECT, 2023
-## Makefile
-## File description:
-## makefile
-##
+APP_NAME=wolfram
+BUILD_DIR=$(shell stack path --local-install-root)/bin
 
-MAIN_FILE = Main.hs
+all: build copy
 
-EXECUTABLE = doop
+build:
+	stack build
 
-GHC_OPTS = -Wall
-
-$(EXECUTABLE): $(MAIN_FILE)
-	@echo "Compilation de $(MAIN_FILE)..."
-	ghc $(GHC_OPTS) -o $(EXECUTABLE) $(MAIN_FILE)
+copy:
+	cp $(BUILD_DIR)/Wolfram-exe ./$(APP_NAME)
 
 fclean:
-	@echo "Vroum Vroum je nettoye..."
-	rm -f $(EXECUTABLE) *.hi *.o
+	stack clean
+	rm -f ./$(APP_NAME)
 
-re:	fclean all
-
-all: $(EXECUTABLE)
+re: fclean all
