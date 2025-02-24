@@ -18,45 +18,50 @@ halfWindow conf = ((window conf) + (move conf)) `div` 2
 
 mainRules :: Conf -> Int -> IO ()
 mainRules config ruleValue = do
-    let initialRow = replicate (halfWindow config) 0 ++ [1] ++ replicate (halfWindow config) 0
+    let w = halfWindow config
+        initialRow = replicate w 0 ++ [1] ++ replicate w 0
+        rows = getStartingRow config ruleValue initialRow
+        generatedRows = iterate (generateNextRow ruleValue) rows
+        output = takeRows config generatedRows
+    mapM_ (putStrLn . printRow) output
 
-    let rows = if (start config) == 0
-            then initialRow
-            else last $ take ((start config) + 1) $ iterate (generateNextRow ruleValue) initialRow
+getStartingRow :: Conf -> Int -> [Int] -> [Int]
+getStartingRow config ruleValue row
+    | start config == 0 = row
+    | otherwise = last $ take (start config + 1) $ iterate (generateNextRow ruleValue) row
 
-    if (line config) == -1
-        then mapM_ (putStrLn . printRow) $ iterate (generateNextRow ruleValue) rows
-        else mapM_ (putStrLn . printRow) $ take (line config) $ iterate (generateNextRow ruleValue) rows
+takeRows :: Conf -> [[Int]] -> [[Int]]
+takeRows config rows
+    | line config == -1 = rows
+    | otherwise = take (line config) rows
 
 fillConf :: Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int -> Conf
-fillConf startValue lineValue windowValue moveValue =
-    Conf
-    { start = case startValue of
-        Just x -> x
-        Nothing -> 0
-    , line = case lineValue of
-        Just x -> x
-        Nothing -> -1
-    , window = case windowValue of
-        Just x -> x
-        Nothing -> 80
-    , move = case moveValue of
-        Just x -> x
-        Nothing -> 0
+fillConf startValue lineValue windowValue moveValue = Conf
+    { start  = fromMaybeInt startValue 0
+    , line   = fromMaybeInt lineValue (-1)
+    , window = fromMaybeInt windowValue 80
+    , move   = fromMaybeInt moveValue 0
     }
+
+fromMaybeInt :: Maybe Int -> Int -> Int
+fromMaybeInt (Just x) _ = x
+fromMaybeInt Nothing  d = d
+
+
+getConfig :: [(String, String)] -> Conf
+getConfig options =
+    let startValue = stringToMaybeInt (lookup "--start" options)
+        lineValue = stringToMaybeInt (lookup "--lines" options)
+        windowValue = stringToMaybeInt (lookup "--window" options)
+        moveValue = stringToMaybeInt (lookup "--move" options)
+    in fillConf startValue lineValue windowValue moveValue
 
 main :: IO ()
 main = do
     args <- getArgs
     let options = parseArgs args
-    let ruleValue = stringToMaybeInt(lookup "--rule" options)
-    let startValue = stringToMaybeInt(lookup "--start" options)
-    let lineValue = stringToMaybeInt(lookup "--lines" options)
-    let windowValue = stringToMaybeInt(lookup "--window" options)
-    let moveValue = stringToMaybeInt(lookup "--move" options)
-
-    let config = fillConf startValue lineValue windowValue moveValue
-
+        ruleValue = stringToMaybeInt (lookup "--rule" options)
+        config = getConfig options
     case ruleValue of
         Just x -> mainRules config x
         Nothing -> exitWith (ExitFailure 84)
