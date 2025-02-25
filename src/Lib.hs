@@ -1,3 +1,10 @@
+{-
+-- EPITECH PROJECT, 2025
+-- Wolframe
+-- File description:
+-- Lib for main
+-}
+
 module Lib (stringToMaybeInt, parseArgs, generateNextRow, printRow) where
 
 import Text.Read (readMaybe)
@@ -50,4 +57,4 @@ generateNextRow rule row =
   [applyRule rule (l, c, r) | (l, c, r) <- zip3 (0:row) row (drop 1 row ++ [0])]
 
 printRow :: [Int] -> String
-printRow = intercalate "" . map (\x -> if x == 1 then "#" else " ")
+printRow = intercalate "" . map (\x -> if x == 1 then "*" else " ")

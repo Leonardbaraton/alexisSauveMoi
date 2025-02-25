@@ -1,3 +1,10 @@
+{-
+-- EPITECH PROJECT, 2025
+-- wolframe
+-- File description:
+-- First rush of the pool
+-}
+
 module Main (main) where
 
 import System.Environment (getArgs)
