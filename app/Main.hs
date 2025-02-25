@@ -24,18 +24,21 @@ halfWindow :: Conf -> Int
 halfWindow conf = ((window conf) + (move conf)) `div` 2
 
 mainRules :: Conf -> Int -> IO ()
-mainRules config ruleValue = do
-    let w = halfWindow config
-        initialRow = replicate w 0 ++ [1] ++ replicate w 0
-        rows = getStartingRow config ruleValue initialRow
-        generatedRows = iterate (generateNextRow ruleValue) rows
-        output = takeRows config generatedRows
+mainRules config ruleValue =
     mapM_ (putStrLn . printRow) output
+  where
+    w = halfWindow config
+    initialRow = replicate w 0 ++ [1] ++ replicate w 0
+    rows = getStartingRow config ruleValue initialRow
+    generatedRows = iterate (generateNextRow ruleValue) rows
+    output = takeRows config generatedRows
 
 getStartingRow :: Conf -> Int -> [Int] -> [Int]
 getStartingRow config ruleValue row
     | start config == 0 = row
-    | otherwise = last $ take (start config + 1) $ iterate (generateNextRow ruleValue) row
+    | otherwise =
+        last $ take (start config + 1) $
+        iterate (generateNextRow ruleValue) row
 
 takeRows :: Conf -> [[Int]] -> [[Int]]
 takeRows config rows

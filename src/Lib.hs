@@ -54,7 +54,9 @@ parseArgs _ = []
 
 generateNextRow :: Int -> [Int] -> [Int]
 generateNextRow rule row =
-  [applyRule rule (l, c, r) | (l, c, r) <- zip3 (0:row) row (drop 1 row ++ [0])]
+  [ applyRule rule (l, c, r)
+  | (l, c, r) <- zip3 (0 : row) row (drop 1 row ++ [0])
+  ]
 
 printRow :: [Int] -> String
 printRow = intercalate "" . map (\x -> if x == 1 then "*" else " ")
