@@ -1,12 +1,11 @@
 ##
-## EPITECH PROJECT, 2025
-## wolframe
+## EPITECH PROJECT, 2023
+## alexispacaud
 ## File description:
-## First rush of the pool
+## makefile
 ##
 
-
-APP_NAME=wolfram
+APP_NAME=imageCompressor
 BUILD_DIR=$(shell stack path --local-install-root)/bin
 
 all: build copy
@@ -15,13 +14,8 @@ build:
 	stack build
 
 copy:
-	cp $(BUILD_DIR)/Wolfram-exe ./$(APP_NAME)
+	cp $(BUILD_DIR)/imagecompressor-exe ./$(APP_NAME)
 
 clean:
 	stack clean
-	rm -f ./$(APP_NAME)
-
-fclean: clean
-		rm -rf .stack-work
-
-re: fclean all
+	rm -f $(APP_NAME)

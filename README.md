@@ -1,1 +1,1 @@
-# Wolfram
+# imagecompressor

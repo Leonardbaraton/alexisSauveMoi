@@ -1,6 +1,6 @@
-name:                Wolfram
+name:                imagecompressor
 version:             0.1.0.0
-github:              "githubuser/Wolfram"
+github:              "githubuser/imagecompressor"
 license:             BSD-3-Clause
 author:              "Author name here"
 maintainer:          "example@example.com"
@@ -10,17 +10,11 @@ extra-source-files:
 - README.md
 - CHANGELOG.md
 
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
-
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/Wolfram#readme>
+description:         Please see the README on GitHub at <https://github.com/githubuser/imagecompressor#readme>
 
 dependencies:
 - base >= 4.7 && < 5
+- random
 
 ghc-options:
 - -Wall
@@ -37,7 +31,7 @@ library:
   source-dirs: src
 
 executables:
-  Wolfram-exe:
+  imagecompressor-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -45,10 +39,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - Wolfram
+    - imagecompressor
 
 tests:
-  Wolfram-test:
+  imagecompressor-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -56,4 +50,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - Wolfram
+    - imagecompressor
